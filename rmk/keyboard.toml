@@ -1,0 +1,33 @@
+[keyboard]
+name = "Sajedull 3x3"
+product_name = "Sajedull 3x3 Macropad"
+vendor_id = 0x4c4b
+product_id = 0x3343
+manufacturer = "Sajedull"
+chip = "nrf52840"
+
+[matrix]
+row_pins = ["P0_17", "P0_20", "P0_22"]
+col_pins = ["P0_24", "P1_00", "P0_11"]
+
+[layout]
+rows = 3
+cols = 3
+map = """
+(0,0)  (0,1)  (0,2)
+(1,0)  (1,1)  (1,2)
+(2,0)  (2,1)  (2,2)
+"""
+
+[keymap]
+layers = 1
+
+[[keymap.layer]]
+keys = """
+1  2  3
+4  5  6
+7  8  9
+"""
+
+[ble]
+enabled = true

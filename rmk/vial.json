@@ -1,0 +1,66 @@
+{
+    "name": "Sajedull 3x3",
+    "vendorId": "0x4C4B",
+    "productId": "0x3343",
+    "lighting": "none",
+    "matrix": {
+        "rows": 3,
+        "cols": 3
+    },
+    "customKeycodes": [
+        {
+            "name": "BT0",
+            "title": "Bluetooth Channel 0",
+            "shortName": "BT0"
+        },
+        {
+            "name": "BT1",
+            "title": "Bluetooth Channel 1",
+            "shortName": "BT1"
+        },
+        {
+            "name": "BT2",
+            "title": "Bluetooth Channel 2",
+            "shortName": "BT2"
+        },
+        {
+            "name": "NEXT_BT",
+            "title": "Switch to the next Bluetooth channel",
+            "shortName": "Next BT"
+        },
+        {
+            "name": "PREV_BT",
+            "title": "Switch to the previous Bluetooth channel",
+            "shortName": "Prev BT"
+        },
+        {
+            "name": "CLR_BT",
+            "title": "Clear bond info for current channel",
+            "shortName": "Clear BT"
+        },
+        {
+            "name": "SWITCH",
+            "title": "Switch default output mode between USB/BLE",
+            "shortName": "Switch Output"
+        }
+    ],
+    "layouts": {
+        "keymap": [
+            [
+                "0,0",
+                "0,1",
+                "0,2"
+            ],
+            [
+                "1,0",
+                "1,1",
+                "1,2"
+            ],
+            [
+                "2,0",
+                "2,1",
+                "2,2"
+            ]
+        ]
+    }
+}
