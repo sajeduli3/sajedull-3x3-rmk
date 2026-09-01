@@ -31,18 +31,15 @@ jobs:
         working-directory: rmk
         run: cargo build --release
 
-      - name: Check firmware
-        run: |
-          ls -lh rmk/target/thumbv7em-none-eabihf/release/
-
       - name: Download UF2 converter
         run: |
-          git clone --depth 1 https://github.com/adafruit/Adafruit_nRF52_Bootloader.git bootloader
-          cp bootloader/tools/uf2conv.py uf2conv.py
+          git clone --depth 1 https://github.com/microsoft/uf2-samdx1.git uf2
+          find uf2 -name "uf2conv.py" -type f
 
       - name: Create UF2
         run: |
-          python3 uf2conv.py \
+          UF2CONV=$(find uf2 -name "uf2conv.py" -type f | head -n 1)
+          python3 "$UF2CONV" \
             rmk/target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk \
             -c \
             -f 0xADA52840 \
