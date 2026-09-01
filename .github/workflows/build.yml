@@ -34,3 +34,23 @@ jobs:
       - name: Check firmware
         run: |
           ls -lh rmk/target/thumbv7em-none-eabihf/release/
+        - name: Download UF2 converter
+        run: |
+          git clone --depth 1 https://github.com/adafruit/Adafruit_nRF52_Bootloader.git bootloader
+          cp bootloader/tools/uf2conv.py uf2conv.py
+
+      - name: Create UF2
+        run: |
+          python3 uf2conv.py \
+            rmk/target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk \
+            -c \
+            -f 0xADA52840 \
+            -b 0x26000 \
+            -o sajedull-3x3-rmk.uf2
+
+      - name: Upload UF2
+        uses: actions/upload-artifact@v4
+        with:
+          name: sajedull-3x3-rmk-firmware
+          path: sajedull-3x3-rmk.uf2
+          if-no-files-found: error
