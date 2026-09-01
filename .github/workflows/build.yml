@@ -10,10 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: rmk
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,18 +29,33 @@ jobs:
         run: cargo install flip-link
 
       - name: Build firmware
+        working-directory: rmk
         run: cargo build --release
 
-      - name: Prepare firmware
+      - name: Install UF2 converter
+        run: |
+          git clone --depth 1 https://github.com/microsoft/uf2-samdx1.git uf2conv
+
+      - name: Create UF2 firmware
+        working-directory: rmk
         run: |
           mkdir -p ../artifacts
+
           arm-none-eabi-objcopy \
             -O binary \
             target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk \
-            ../artifacts/sajedull-3x3-rmk.bin
+            firmware.bin
 
-      - name: Upload firmware
+          python3 ../uf2conv/utils/uf2conv.py \
+            firmware.bin \
+            -c \
+            -f 0xADA52840 \
+            -b 0x26000 \
+            -o ../artifacts/sajedull-3x3-rmk.uf2
+
+      - name: Upload UF2 firmware
         uses: actions/upload-artifact@v4
         with:
-          name: sajedull-3x3-rmk
-          path: rmk/artifacts/
+          name: sajedull-3x3-rmk-firmware
+          path: artifacts/sajedull-3x3-rmk.uf2
+          if-no-files-found: error
