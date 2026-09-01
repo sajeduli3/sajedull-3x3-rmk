@@ -31,15 +31,6 @@ jobs:
         working-directory: rmk
         run: cargo build --release
 
-      - name: Check firmware
-        run: |
-          ls -lh rmk/target/thumbv7em-none-eabihf/release/
-
-      - name: Download UF2 converter
-        run: |
-          git clone --depth 1 https://github.com/microsoft/uf2-samdx1.git uf2
-          find uf2 -name "uf2conv.py" -type f
-
       - name: Create binary
         run: |
           arm-none-eabi-objcopy \
@@ -47,23 +38,27 @@ jobs:
             rmk/target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk \
             firmware.bin
 
+      - name: Download UF2 converter
+        run: |
+          wget -q https://raw.githubusercontent.com/microsoft/uf2/master/utils/uf2conv.py
+          test -s uf2conv.py
+          head -n 2 uf2conv.py
+
       - name: Create UF2
         run: |
-          UF2CONV=$(find uf2 -name "uf2conv.py" -type f | head -n 1)
-          echo "Using converter: $UF2CONV"
-          python3 "$UF2CONV" \
+          python3 uf2conv.py \
             firmware.bin \
             -c \
             -f 0xADA52840 \
             -b 0x26000 \
             -o sajedull-3x3-rmk.uf2
 
-      - name: Check UF2
+      - name: Check firmware
         run: |
           ls -lh firmware.bin
           ls -lh sajedull-3x3-rmk.uf2
 
-      - name: Upload UF2
+      - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: sajedull-3x3-rmk-firmware
