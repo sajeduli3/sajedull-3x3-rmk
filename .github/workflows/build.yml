@@ -32,9 +32,10 @@ jobs:
         working-directory: rmk
         run: cargo build --release
 
-      - name: Install UF2 converter
+            - name: Install UF2 converter
         run: |
           git clone --depth 1 https://github.com/microsoft/uf2-samdx1.git uf2conv
+          find uf2conv -name uf2conv.py -type f
 
       - name: Create UF2 firmware
         working-directory: rmk
@@ -46,7 +47,7 @@ jobs:
             target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk \
             firmware.bin
 
-          python3 ../uf2conv/utils/uf2conv.py \
+          python3 ../uf2conv/uf2conv.py \
             firmware.bin \
             -c \
             -f 0xADA52840 \
