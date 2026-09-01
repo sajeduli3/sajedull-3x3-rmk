@@ -15,12 +15,12 @@ install_crate = { crate_name = "cargo-binutils", binary = "cargo", test_arg = [
     "--help",
 ] }
 command = "cargo"
-args = ["objcopy", "--release", "--", "-O", "ihex", "{{ project_name }}.hex"]
+args = ["objcopy", "--release", "--", "-O", "ihex", "sajedull-3x3-rmk.hex"]
 dependencies = ["build"]
 
 [tasks.bin]
 command = "cargo"
-args = ["objcopy", "--release", "--", "-O", "binary", "{{ project_name }}.bin"]
+args = ["objcopy", "--release", "--", "-O", "binary", "sajedull-3x3-rmk.bin"]
 dependencies = ["build"]
 
 [tasks.uf2]
@@ -32,9 +32,9 @@ command = "cargo"
 args = [
     "hex-to-uf2",
     "--input-path",
-    "{{ project_name }}.hex",
+    "sajedull-3x3-rmk.hex",
     "--output-path",
-    "{{ project_name }}.uf2",
+    "sajedull-3x3-rmk.uf2",
     "--family",
     "nrf52840",
 ]
