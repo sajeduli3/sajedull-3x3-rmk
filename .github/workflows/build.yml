@@ -24,7 +24,7 @@ jobs:
           targets: thumbv7em-none-eabihf
 
       - name: Install ARM GNU tools
-        run: sudo apt-get update && sudo apt-get install -y binutils-arm-none-eabi
+        run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi
 
       - name: Install flip-link
         run: cargo install flip-link
