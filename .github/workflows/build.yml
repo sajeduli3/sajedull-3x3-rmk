@@ -41,8 +41,9 @@ jobs:
       - name: Download UF2 converter
         run: |
           wget -q https://raw.githubusercontent.com/microsoft/uf2/master/utils/uf2conv.py
+          wget -q https://raw.githubusercontent.com/microsoft/uf2/master/utils/uf2families.json
           test -s uf2conv.py
-          head -n 2 uf2conv.py
+          test -s uf2families.json
 
       - name: Create UF2
         run: |
