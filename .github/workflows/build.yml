@@ -34,7 +34,8 @@ jobs:
       - name: Check firmware
         run: |
           ls -lh rmk/target/thumbv7em-none-eabihf/release/
-        - name: Download UF2 converter
+
+      - name: Download UF2 converter
         run: |
           git clone --depth 1 https://github.com/adafruit/Adafruit_nRF52_Bootloader.git bootloader
           cp bootloader/tools/uf2conv.py uf2conv.py
@@ -47,6 +48,10 @@ jobs:
             -f 0xADA52840 \
             -b 0x26000 \
             -o sajedull-3x3-rmk.uf2
+
+      - name: Check UF2
+        run: |
+          ls -lh sajedull-3x3-rmk.uf2
 
       - name: Upload UF2
         uses: actions/upload-artifact@v4
