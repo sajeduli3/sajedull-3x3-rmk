@@ -29,12 +29,12 @@ jobs:
         working-directory: rmk
         run: cargo build --release
 
-      - name: Install UF2 converter
-        run: git clone --depth 1 https://github.com/microsoft/uf2-samdx1.git uf2conv
+        - name: Download UF2 converter
+        run: wget -q https://raw.githubusercontent.com/microsoft/uf2-samdx1/master/utils/uf2conv.py
 
-      - name: Create UF2
+        - name: Create UF2
         working-directory: rmk
-        run: python3 ../uf2conv/uf2conv.py target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk -c -f 0xADA52840 -b 0x26000 -o ../sajedull-3x3-rmk.uf2
+        run: python3 ../uf2conv.py target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk -c -f 0xADA52840 -b 0x26000 -o ../sajedull-3x3-rmk.uf2
 
       - name: Upload UF2
         uses: actions/upload-artifact@v4
