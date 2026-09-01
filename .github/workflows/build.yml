@@ -1,0 +1,44 @@
+name: Build RMK Firmware
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: rmk
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: thumbv7em-none-eabihf
+
+      - name: Install flip-link
+        run: cargo install flip-link
+
+      - name: Build firmware
+        run: cargo build --release
+
+      - name: Prepare firmware
+        run: |
+          mkdir -p ../artifacts
+          arm-none-eabi-objcopy \
+            -O binary \
+            target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk \
+            ../artifacts/sajedull-3x3-rmk.bin
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: sajedull-3x3-rmk
+          path: artifacts/

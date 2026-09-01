@@ -1,5 +1,5 @@
 [package]
-name = "{{ project_name }}"
+name = "sajedull-3x3-rmk"
 version = "0.2.0"
 authors = ["Haobo Gu <haobogu@outlook.com>"]
 description = "Keyboard firmware written in Rust"
@@ -52,7 +52,7 @@ json = "0.12"
 const-gen = "1.6"
 
 [[bin]]
-name = "{{ project_name }}"
+name = "sajedull-3x3-rmk"
 test = false
 bench = false
 
