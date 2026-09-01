@@ -21,10 +21,13 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
+          toolchain: stable
           targets: thumbv7em-none-eabihf
 
       - name: Install ARM GNU tools
-        run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-none-eabi binutils-arm-none-eabi
 
       - name: Install flip-link
         run: cargo install flip-link
@@ -32,28 +35,16 @@ jobs:
       - name: Build firmware
         run: cargo build --release
 
-            - name: Install UF2 converter
-        run: |
-          wget -q https://github.com/microsoft/uf2conv/releases/latest/download/uf2conv.py
-          chmod +x uf2conv.py
-
-      - name: Prepare UF2 firmware
+      - name: Prepare firmware
         run: |
           mkdir -p ../artifacts
-
           arm-none-eabi-objcopy \
             -O binary \
             target/thumbv7em-none-eabihf/release/sajedull-3x3-rmk \
-            firmware.bin
-
-          python3 ../uf2conv.py \
-            firmware.bin \
-            -c \
-            -f 0xADA52840 \
-            -o ../artifacts/sajedull-3x3-rmk.uf2
+            ../artifacts/sajedull-3x3-rmk.bin
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: sajedull-3x3-rmk
-          path: artifacts/
+          path: rmk/artifacts/
